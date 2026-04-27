@@ -5,6 +5,7 @@ import {
   TransactionBuilder,
   rpc,
   nativeToScVal,
+  scValToNative,
   xdr,
 } from "@stellar/stellar-sdk";
 import { networkPassphrase } from "./stellar";
@@ -71,6 +72,32 @@ export async function invokeContract(opts: {
     throw new Error("contract call failed on chain");
   }
   return { hash };
+}
+
+export async function readContract<T = unknown>(opts: {
+  contractId: string;
+  method: string;
+  args: ScArg[];
+  source: string;
+}): Promise<T> {
+  const account = await sorobanRpc.getAccount(opts.source);
+  const contract = new Contract(opts.contractId);
+  const tx = new TransactionBuilder(account, {
+    fee: BASE_FEE,
+    networkPassphrase,
+  })
+    .addOperation(contract.call(opts.method, ...opts.args))
+    .setTimeout(30)
+    .build();
+
+  const sim = await sorobanRpc.simulateTransaction(tx);
+  if (rpc.Api.isSimulationError(sim)) {
+    throw new Error(sim.error);
+  }
+  if (!("result" in sim) || !sim.result?.retval) {
+    throw new Error("no return value from contract");
+  }
+  return scValToNative(sim.result.retval) as T;
 }
 
 export function xlmToStroops(xlm: string): bigint {

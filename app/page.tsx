@@ -1,5 +1,6 @@
 import { WalletButton } from "@/components/wallet-button";
 import { BalanceCard } from "@/components/balance-card";
+import { ReceiptsPanel } from "@/components/receipts-panel";
 import { SendForm } from "@/components/send-form";
 import { EventFeed } from "@/components/event-feed";
 
@@ -15,10 +16,13 @@ export default function Home() {
           <WalletButton />
         </header>
         <p className="mt-4 text-sm text-muted">
-          send xlm tips on stellar testnet. every tip is logged on-chain.
+          send xlm tips on stellar testnet. each tip mints a soulbound receipt.
         </p>
         <div className="mt-6 space-y-4">
-          <BalanceCard />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <BalanceCard />
+            <ReceiptsPanel />
+          </div>
           <SendForm />
           <EventFeed />
         </div>

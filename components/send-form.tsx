@@ -30,6 +30,7 @@ export function SendForm() {
     try {
       await send.mutateAsync({ to, amount, memo: memo || undefined });
       qc.invalidateQueries({ queryKey: ["balance", address] });
+      qc.invalidateQueries({ queryKey: ["receipts"] });
       setAmount("");
       setMemo("");
     } catch {
