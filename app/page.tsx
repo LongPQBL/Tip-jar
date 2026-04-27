@@ -6,17 +6,18 @@ import { EventFeed } from "@/components/event-feed";
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <div className="mx-auto max-w-2xl px-5 py-12 sm:px-6 sm:py-20">
-        <header className="flex items-center justify-between gap-3">
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+      <div className="mx-auto max-w-2xl px-5 py-10 sm:px-6 sm:py-16">
+        <header className="flex items-center justify-between gap-3 border-b border-border pb-5">
+          <h1 className="flex items-center gap-2.5 text-2xl font-semibold tracking-tight sm:text-3xl">
+            <span className="h-2 w-2 rounded-full bg-accent" />
             tip jar
           </h1>
           <WalletButton />
         </header>
-        <p className="mt-3 text-[var(--color-muted)]">
-          send xlm tips on stellar testnet.
+        <p className="mt-4 text-sm text-muted">
+          send xlm tips on stellar testnet. every tip is logged on-chain.
         </p>
-        <div className="mt-8 space-y-4">
+        <div className="mt-6 space-y-4">
           <BalanceCard />
           <SendForm />
           <EventFeed />

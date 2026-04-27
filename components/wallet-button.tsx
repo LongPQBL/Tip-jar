@@ -14,13 +14,10 @@ export function WalletButton() {
       <button
         onClick={disconnect}
         title="click to disconnect"
-        className="shrink-0 rounded-md border border-[var(--color-border)] px-3 py-2 text-sm hover:bg-zinc-50"
+        className="shrink-0 rounded-md border border-border bg-surface px-3 py-2 text-xs transition-colors hover:border-accent"
       >
         <span className="font-mono">{shorten(address)}</span>
-        <span className="hidden text-[var(--color-muted)] sm:inline">
-          {" "}
-          · disconnect
-        </span>
+        <span className="hidden text-subtle sm:inline"> · disconnect</span>
       </button>
     );
   }
@@ -28,7 +25,7 @@ export function WalletButton() {
   return (
     <button
       onClick={connect}
-      className="shrink-0 rounded-md bg-[var(--color-fg)] px-3 py-2 text-sm text-white hover:opacity-90"
+      className="shrink-0 rounded-md bg-accent px-3 py-2 text-xs font-medium text-bg transition-colors hover:bg-cyan-300"
     >
       connect wallet
     </button>

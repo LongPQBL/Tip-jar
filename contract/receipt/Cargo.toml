@@ -1,14 +1,13 @@
 [package]
-name = "tip-jar-contract"
+name = "receipt-token"
 version = { workspace = true }
 edition = { workspace = true }
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 soroban-sdk = { workspace = true }
 
 [dev-dependencies]
 soroban-sdk = { workspace = true, features = ["testutils"] }
-receipt-token = { path = "../receipt" }

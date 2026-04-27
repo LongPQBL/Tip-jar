@@ -16,21 +16,19 @@ export function BalanceCard() {
   if (!address) return null;
 
   return (
-    <div className="rounded-lg border border-[var(--color-border)] p-5">
-      <div className="text-sm text-[var(--color-muted)]">balance</div>
-      <div className="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl">
+    <div className="rounded-lg border border-border bg-surface p-5">
+      <div className="text-xs uppercase tracking-wider text-subtle">balance</div>
+      <div className="mt-2 font-mono text-2xl font-semibold tracking-tight sm:text-3xl">
         {isLoading ? (
-          <span className="inline-block h-7 w-32 animate-pulse rounded bg-zinc-100 sm:h-8 sm:w-40" />
+          <span className="inline-block h-7 w-32 animate-pulse rounded bg-elevated sm:h-8 sm:w-40" />
         ) : isError ? (
-          <span className="text-base font-normal text-red-600">
+          <span className="text-base font-normal text-danger">
             failed to load
           </span>
         ) : (
           <>
-            {formatXlm(data ?? "0")}{" "}
-            <span className="text-lg text-[var(--color-muted)] sm:text-xl">
-              XLM
-            </span>
+            {formatXlm(data ?? "0")}
+            <span className="ml-2 text-base font-normal text-muted">XLM</span>
           </>
         )}
       </div>

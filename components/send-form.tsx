@@ -12,6 +12,9 @@ import {
 
 const EXPLORER = "https://stellar.expert/explorer/testnet/tx";
 
+const inputCls =
+  "w-full rounded-md border border-border bg-bg px-3 py-2 text-sm placeholder:text-subtle focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent";
+
 export function SendForm() {
   const { address } = useWallet();
   const qc = useQueryClient();
@@ -39,79 +42,77 @@ export function SendForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="space-y-3 rounded-lg border border-[var(--color-border)] p-5"
+      className="space-y-3 rounded-lg border border-border bg-surface p-5"
     >
-      <div className="text-sm text-[var(--color-muted)]">send a tip</div>
+      <div className="text-xs uppercase tracking-wider text-subtle">
+        send tip
+      </div>
       <input
         type="text"
-        placeholder="destination address (G...)"
+        placeholder="destination (G...)"
         value={to}
         onChange={(e) => setTo(e.target.value.trim())}
         required
-        className="w-full rounded-md border border-[var(--color-border)] px-3 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-zinc-200"
+        className={`${inputCls} font-mono`}
       />
-      <input
-        type="number"
-        step="0.0000001"
-        min="0.0000001"
-        placeholder="amount (XLM)"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        required
-        className="w-full rounded-md border border-[var(--color-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-200"
-      />
-      <input
-        type="text"
-        placeholder="memo (optional, max 28 chars)"
-        value={memo}
-        onChange={(e) => setMemo(e.target.value)}
-        maxLength={28}
-        className="w-full rounded-md border border-[var(--color-border)] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-200"
-      />
+      <div className="grid grid-cols-2 gap-3">
+        <input
+          type="number"
+          step="0.0000001"
+          min="0.0000001"
+          placeholder="amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          required
+          className={`${inputCls} font-mono`}
+        />
+        <input
+          type="text"
+          placeholder="memo (optional)"
+          value={memo}
+          onChange={(e) => setMemo(e.target.value)}
+          maxLength={28}
+          className={inputCls}
+        />
+      </div>
       <button
         type="submit"
         disabled={send.isPending}
-        className="w-full rounded-md bg-[var(--color-fg)] px-3 py-2 text-sm text-white hover:opacity-90 disabled:opacity-50"
+        className="w-full rounded-md bg-accent px-3 py-2 text-sm font-medium text-bg transition-colors hover:bg-cyan-300 disabled:opacity-50"
       >
-        {send.isPending ? "sending..." : "send tip"}
+        {send.isPending ? "sending..." : "send tip →"}
       </button>
 
       {send.isPending && (
-        <div className="text-sm text-[var(--color-muted)]">
-          awaiting wallet signatures (one for the payment, one for the on-chain log)...
+        <div className="text-xs text-subtle">
+          awaiting wallet signatures (payment + on-chain log)...
         </div>
       )}
 
       {send.isSuccess && send.data && (
-        <div className="space-y-2 rounded-md border border-green-200 bg-green-50 p-3 text-sm">
-          <div className="font-medium text-green-800">sent and logged</div>
-          <div>
-            <span className="text-green-700">payment</span>:{" "}
-            <a
-              href={`${EXPLORER}/${send.data.paymentHash}`}
-              target="_blank"
-              rel="noreferrer"
-              className="break-all font-mono text-xs text-green-700 underline"
-            >
-              {send.data.paymentHash.slice(0, 16)}...
-            </a>
-          </div>
-          <div>
-            <span className="text-green-700">on-chain log</span>:{" "}
-            <a
-              href={`${EXPLORER}/${send.data.contractHash}`}
-              target="_blank"
-              rel="noreferrer"
-              className="break-all font-mono text-xs text-green-700 underline"
-            >
-              {send.data.contractHash.slice(0, 16)}...
-            </a>
-          </div>
+        <div className="space-y-1.5 rounded-md border border-success/30 bg-success/5 p-3 text-xs">
+          <div className="font-medium text-success">sent and logged</div>
+          <a
+            href={`${EXPLORER}/${send.data.paymentHash}`}
+            target="_blank"
+            rel="noreferrer"
+            className="block break-all font-mono text-muted hover:text-success"
+          >
+            payment: {send.data.paymentHash.slice(0, 16)}...
+          </a>
+          <a
+            href={`${EXPLORER}/${send.data.contractHash}`}
+            target="_blank"
+            rel="noreferrer"
+            className="block break-all font-mono text-muted hover:text-success"
+          >
+            on-chain: {send.data.contractHash.slice(0, 16)}...
+          </a>
         </div>
       )}
 
       {err && (
-        <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+        <div className="rounded-md border border-danger/30 bg-danger/5 p-3 text-xs text-danger">
           {err instanceof UserRejectedError
             ? "you rejected the request in your wallet."
             : err instanceof InsufficientBalanceError
