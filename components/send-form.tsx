@@ -10,6 +10,8 @@ import {
   InsufficientBalanceError,
 } from "@/lib/errors";
 
+const EXPLORER = "https://stellar.expert/explorer/testnet/tx";
+
 export function SendForm() {
   const { address } = useWallet();
   const qc = useQueryClient();
@@ -28,7 +30,7 @@ export function SendForm() {
       setAmount("");
       setMemo("");
     } catch {
-      // error is exposed via send.error; UI handles it below
+      // surfaced via send.error below
     }
   }
 
@@ -51,7 +53,7 @@ export function SendForm() {
       <input
         type="number"
         step="0.0000001"
-        min="0"
+        min="0.0000001"
         placeholder="amount (XLM)"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
@@ -76,21 +78,35 @@ export function SendForm() {
 
       {send.isPending && (
         <div className="text-sm text-[var(--color-muted)]">
-          awaiting wallet signature, then submitting to the network...
+          awaiting wallet signatures (one for the payment, one for the on-chain log)...
         </div>
       )}
 
       {send.isSuccess && send.data && (
-        <div className="rounded-md border border-green-200 bg-green-50 p-3 text-sm">
-          <div className="font-medium text-green-800">sent</div>
-          <a
-            href={`https://stellar.expert/explorer/testnet/tx/${send.data.hash}`}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-1 block break-all font-mono text-xs text-green-700 underline"
-          >
-            {send.data.hash}
-          </a>
+        <div className="space-y-2 rounded-md border border-green-200 bg-green-50 p-3 text-sm">
+          <div className="font-medium text-green-800">sent and logged</div>
+          <div>
+            <span className="text-green-700">payment</span>:{" "}
+            <a
+              href={`${EXPLORER}/${send.data.paymentHash}`}
+              target="_blank"
+              rel="noreferrer"
+              className="break-all font-mono text-xs text-green-700 underline"
+            >
+              {send.data.paymentHash.slice(0, 16)}...
+            </a>
+          </div>
+          <div>
+            <span className="text-green-700">on-chain log</span>:{" "}
+            <a
+              href={`${EXPLORER}/${send.data.contractHash}`}
+              target="_blank"
+              rel="noreferrer"
+              className="break-all font-mono text-xs text-green-700 underline"
+            >
+              {send.data.contractHash.slice(0, 16)}...
+            </a>
+          </div>
         </div>
       )}
 
