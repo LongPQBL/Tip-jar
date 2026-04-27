@@ -1,5 +1,6 @@
 import { WalletButton } from "@/components/wallet-button";
 import { BalanceCard } from "@/components/balance-card";
+import { SendForm } from "@/components/send-form";
 
 export default function Home() {
   return (
@@ -12,8 +13,9 @@ export default function Home() {
         <p className="mt-3 text-[var(--color-muted)]">
           send xlm tips on stellar testnet.
         </p>
-        <div className="mt-8">
+        <div className="mt-8 space-y-4">
           <BalanceCard />
+          <SendForm />
         </div>
       </div>
     </main>
