@@ -18,17 +18,19 @@ export function BalanceCard() {
   return (
     <div className="rounded-lg border border-[var(--color-border)] p-5">
       <div className="text-sm text-[var(--color-muted)]">balance</div>
-      <div className="mt-1 text-3xl font-semibold tracking-tight">
+      <div className="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl">
         {isLoading ? (
-          <span className="inline-block h-8 w-40 animate-pulse rounded bg-zinc-100" />
+          <span className="inline-block h-7 w-32 animate-pulse rounded bg-zinc-100 sm:h-8 sm:w-40" />
         ) : isError ? (
-          <span className="text-red-600 text-base font-normal">
+          <span className="text-base font-normal text-red-600">
             failed to load
           </span>
         ) : (
           <>
             {formatXlm(data ?? "0")}{" "}
-            <span className="text-[var(--color-muted)] text-xl">XLM</span>
+            <span className="text-lg text-[var(--color-muted)] sm:text-xl">
+              XLM
+            </span>
           </>
         )}
       </div>

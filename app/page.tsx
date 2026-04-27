@@ -6,9 +6,11 @@ import { EventFeed } from "@/components/event-feed";
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <div className="mx-auto max-w-2xl px-6 py-20">
-        <header className="flex items-center justify-between">
-          <h1 className="text-4xl font-semibold tracking-tight">tip jar</h1>
+      <div className="mx-auto max-w-2xl px-5 py-12 sm:px-6 sm:py-20">
+        <header className="flex items-center justify-between gap-3">
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            tip jar
+          </h1>
           <WalletButton />
         </header>
         <p className="mt-3 text-[var(--color-muted)]">
