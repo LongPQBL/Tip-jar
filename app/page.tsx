@@ -3,6 +3,8 @@ import { BalanceCard } from "@/components/balance-card";
 import { ReceiptsPanel } from "@/components/receipts-panel";
 import { SendForm } from "@/components/send-form";
 import { EventFeed } from "@/components/event-feed";
+import { HeroSection } from "@/components/hero-section";
+import { StatsStrip } from "@/components/stats-strip";
 
 export default function Home() {
   return (
@@ -15,10 +17,13 @@ export default function Home() {
           </h1>
           <WalletButton />
         </header>
-        <p className="mt-4 text-sm text-muted">
-          send xlm tips on stellar testnet. each tip mints a soulbound receipt.
-        </p>
-        <div className="mt-6 space-y-4">
+
+        <HeroSection />
+        <StatsStrip />
+
+        <div className="my-8 border-t border-border" />
+
+        <div className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <BalanceCard />
             <ReceiptsPanel />

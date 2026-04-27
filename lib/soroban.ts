@@ -1,4 +1,5 @@
 import {
+  Account,
   Address,
   BASE_FEE,
   Contract,
@@ -12,6 +13,12 @@ import { networkPassphrase } from "./stellar";
 
 const RPC_URL =
   process.env.NEXT_PUBLIC_SOROBAN_RPC_URL ?? "https://soroban-testnet.stellar.org";
+
+// fallback "source" account for read-only simulations. any valid g-address works.
+// the simulator doesn't actually use this for sequence; it just needs a shape.
+const READ_SOURCE =
+  process.env.NEXT_PUBLIC_READ_SOURCE ??
+  "GBZGPMRLYDWCC6GKX5B7HYFYQWZOUHND3RMGGR5R7TYEA7SE7QGZ5QO7";
 
 export const sorobanRpc = new rpc.Server(RPC_URL);
 
@@ -78,9 +85,10 @@ export async function readContract<T = unknown>(opts: {
   contractId: string;
   method: string;
   args: ScArg[];
-  source: string;
+  source?: string;
 }): Promise<T> {
-  const account = await sorobanRpc.getAccount(opts.source);
+  // reads don't submit a tx; sequence number doesn't matter so skip getAccount
+  const account = new Account(opts.source ?? READ_SOURCE, "0");
   const contract = new Contract(opts.contractId);
   const tx = new TransactionBuilder(account, {
     fee: BASE_FEE,
