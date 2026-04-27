@@ -1,6 +1,7 @@
 import { WalletButton } from "@/components/wallet-button";
 import { BalanceCard } from "@/components/balance-card";
 import { SendForm } from "@/components/send-form";
+import { EventFeed } from "@/components/event-feed";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         <div className="mt-8 space-y-4">
           <BalanceCard />
           <SendForm />
+          <EventFeed />
         </div>
       </div>
     </main>
