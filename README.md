@@ -1,62 +1,62 @@
-# tip jar
+# Tip Jar
 
-a small stellar dapp on testnet for sending xlm tips. connects a wallet (freighter or anything else via stellar wallets kit), sends the payment, records the tip on a soroban contract, and mints a soulbound "receipt" token to the tipper as proof. live feed of recent tips pulled straight from contract events.
+A small Stellar dApp on testnet for sending XLM tips. Connects a wallet (Freighter or anything else via Stellar Wallets Kit), sends the payment, records the tip on a Soroban contract, and mints a soulbound "receipt" token to the tipper as proof. Live feed of recent tips pulled straight from contract events.
 
-[![ci](https://github.com/LongPQBL/Tip-jar/actions/workflows/ci.yml/badge.svg)](https://github.com/LongPQBL/Tip-jar/actions)
+[![CI](https://github.com/LongPQBL/Tip-jar/actions/workflows/ci.yml/badge.svg)](https://github.com/LongPQBL/Tip-jar/actions)
 
-- live: <DEMO_URL>
-- demo video: <DEMO_VIDEO_URL>
-- tip jar contract: [`CDBKD2U2…SV4Y`](https://stellar.expert/explorer/testnet/contract/CDBKD2U27Y73EI42LC6HMAS53PGVB6CUZK7DFPNWTOODSYOHD6L3SV4Y)
-- receipt contract: [`CBO2AVI6…J7XT`](https://stellar.expert/explorer/testnet/contract/CBO2AVI6YI5A27Z3A7WB36544DUM37SZ7QN3G6BMENJQY2YZ5DVVJ7XT)
+- Live: <DEMO_URL>
+- Demo video: <DEMO_VIDEO_URL>
+- Tip Jar contract: [`CDBKD2U2…SV4Y`](https://stellar.expert/explorer/testnet/contract/CDBKD2U27Y73EI42LC6HMAS53PGVB6CUZK7DFPNWTOODSYOHD6L3SV4Y)
+- Receipt contract: [`CBO2AVI6…J7XT`](https://stellar.expert/explorer/testnet/contract/CBO2AVI6YI5A27Z3A7WB36544DUM37SZ7QN3G6BMENJQY2YZ5DVVJ7XT)
 
-## what's in here
+## What's In Here
 
 ```
 .
-├── app/                 # next.js app router (page, layout, providers)
-├── components/          # wallet button, balance card, send form, event feed, receipts
-├── hooks/               # react query hooks (balance, send, events, receipts)
+├── app/                 # Next.js App Router (page, layout, providers)
+├── components/          # Wallet button, balance card, send form, event feed, receipts
+├── hooks/               # React Query hooks (balance, send, events, receipts)
 ├── lib/
-│   ├── stellar.ts       # horizon client + send-xlm helper
-│   ├── soroban.ts       # rpc client + invokeContract + scval helpers
-│   ├── wallets.ts       # stellar wallets kit init (4 wallets, lazy, browser-only)
+│   ├── stellar.ts       # Horizon client + send-XLM helper
+│   ├── soroban.ts       # RPC client + invokeContract + ScVal helpers
+│   ├── wallets.ts       # Stellar Wallets Kit init (4 wallets, lazy, browser-only)
 │   ├── events.ts        # getEvents -> TipEvent[]
 │   └── errors.ts        # WalletNotFound / UserRejected / InsufficientBalance
 ├── contract/
-│   ├── Cargo.toml       # workspace
-│   ├── tip_jar/         # records tips, calls receipt.mint, emits events
-│   └── receipt/         # soulbound SEP-41 receipt token
+│   ├── Cargo.toml       # Workspace
+│   ├── tip_jar/         # Records tips, calls receipt.mint, emits events
+│   └── receipt/         # Soulbound SEP-41 receipt token
 └── scripts/
-    └── deploy.sh        # build both, deploy, transfer admin, rewrite .env.local
+    └── deploy.sh        # Build both, deploy, transfer admin, rewrite .env.local
 ```
 
-## stack
+## Stack
 
-- next.js 15 + react 19 + tailwind v4 (dark fintech theme)
-- @stellar/stellar-sdk (horizon + soroban rpc)
-- @creit.tech/stellar-wallets-kit (freighter, xbull, lobstr, albedo)
-- soroban-sdk 22 (rust)
+- Next.js 15 + React 19 + Tailwind v4 (dark fintech theme)
+- @stellar/stellar-sdk (Horizon + Soroban RPC)
+- @creit.tech/stellar-wallets-kit (Freighter, xBull, Lobstr, Albedo)
+- soroban-sdk 22 (Rust)
 - @tanstack/react-query (balance polling, event polling, caching, loading states)
 
-## how it works
+## How It Works
 
-every "send tip" click does two on-chain things in sequence:
+Every "Send Tip" click does two on-chain things in sequence:
 
-1. an xlm payment via horizon. the recipient gets the funds.
-2. a soroban call to `tip_jar.record_tip(from, to, amount, memo)`. that function:
-   - bumps per-recipient totals + count in the tip_jar contract
-   - calls `receipt.mint(from, 1)` (inter-contract call) to drop a soulbound receipt token into the tipper's account
-   - emits a `tip` event with `(from, to, amount, memo)` so the live feed picks it up
+1. An XLM payment via Horizon. The recipient gets the funds.
+2. A Soroban call to `tip_jar.record_tip(from, to, amount, memo)`. That function:
+   - Bumps per-recipient totals + count in the tip_jar contract
+   - Calls `receipt.mint(from, 1)` (inter-contract call) to drop a soulbound receipt token into the tipper's account
+   - Emits a `tip` event with `(from, to, amount, memo)` so the live feed picks it up
 
-the receipt token is non-transferable on purpose: there's nothing to redeem with it, it's just proof you tipped. open the page in two browsers and a tip from one shows up in the other within ~6 seconds.
+The receipt token is non-transferable on purpose: there's nothing to redeem with it, it's just proof you tipped. Open the page in two browsers and a tip from one shows up in the other within ~6 seconds.
 
 ```
-       wallet
+       Wallet
          │
    sign  │  payment + record_tip
          ▼
    ┌─────────────────────────┐         ┌──────────────────┐
-   │      tip_jar            │ ──────► │ receipt token    │
+   │      tip_jar            │ ──────► │ Receipt token    │
    │  - record_tip()         │  mint() │  - mint(to, 1)   │
    │  - total_tipped(addr)   │         │  - balance(addr) │
    │  - tip_count(addr)      │         │  (soulbound)     │
@@ -64,51 +64,51 @@ the receipt token is non-transferable on purpose: there's nothing to redeem with
    └─────────────────────────┘
               │
               ▼
-        soroban rpc
+        Soroban RPC
               │
               ▼
-   getEvents → live feed in ui
+   getEvents → live feed in UI
 ```
 
-## try it locally
+## Try It Locally
 
-you'll need:
+You'll need:
 
-- node 22+
-- rust stable + the stellar cli (`stellar` v25+, `wasm32v1-none` target installed)
-- a stellar testnet wallet ([freighter](https://www.freighter.app/) is fine; lobstr / albedo / xbull all work via the kit)
-- a funded testnet account (freighter has a one-click friendbot)
+- Node 22+
+- Rust stable + the Stellar CLI (`stellar` v25+, `wasm32v1-none` target installed)
+- A Stellar testnet wallet ([Freighter](https://www.freighter.app/) is fine; Lobstr / Albedo / xBull all work via the kit)
+- A funded testnet account (Freighter has a one-click Friendbot)
 
 ```bash
 git clone https://github.com/LongPQBL/Tip-jar.git
 cd Tip-jar
 npm install
 cp .env.example .env.local
-# already has the deployed contract ids; works as is
+# Already has the deployed contract IDs; works as is
 npm run dev
 ```
 
-then open http://localhost:3000, hit "connect wallet", pick freighter, send yourself a tip.
+Then open http://localhost:3000, hit "Connect Wallet", pick Freighter, send yourself a tip.
 
-## deploying your own contracts
+## Deploying Your Own Contracts
 
-if you want fresh contracts under your own admin key:
+If you want fresh contracts under your own admin key:
 
 ```bash
-stellar keys generate alice --network testnet --fund   # if you don't have a key
+stellar keys generate alice --network testnet --fund   # If you don't have a key
 ./scripts/deploy.sh alice
 ```
 
-what the script does:
+What the script does:
 
-1. builds both wasms (`stellar contract build` per crate)
-2. deploys receipt with the deployer as initial admin
-3. deploys tip_jar pointing at receipt
-4. calls `receipt.set_admin(tip_jar_address)` so future mints are authorized
-5. rewrites `NEXT_PUBLIC_TIP_JAR_CONTRACT_ID` and `NEXT_PUBLIC_RECEIPT_CONTRACT_ID` in `.env.local`
-6. prints stellar.expert links to both contracts
+1. Builds both wasms (`stellar contract build` per crate)
+2. Deploys receipt with the deployer as initial admin
+3. Deploys tip_jar pointing at receipt
+4. Calls `receipt.set_admin(tip_jar_address)` so future mints are authorized
+5. Rewrites `NEXT_PUBLIC_TIP_JAR_CONTRACT_ID` and `NEXT_PUBLIC_RECEIPT_CONTRACT_ID` in `.env.local`
+6. Prints stellar.expert links to both contracts
 
-## tests
+## Tests
 
 ```bash
 cargo test
@@ -134,35 +134,34 @@ cargo test
 - `metadata_is_correct`
 - `admin_can_be_transferred`
 
-ci runs them on every push (see `.github/workflows/ci.yml`).
+CI runs them on every push (see `.github/workflows/ci.yml`).
 
-## error handling
+## Error Handling
 
-three typed errors in `lib/errors.ts` cover the failure modes the wallet kit + horizon throw at us:
+Three typed errors in `lib/errors.ts` cover the failure modes the wallet kit + Horizon throw at us:
 
-- `WalletNotFoundError` — no extension, no kit-supported wallet
-- `UserRejectedError` — user closed the popup
-- `InsufficientBalanceError` — op_underfunded / not enough xlm
+- `WalletNotFoundError` — No extension, no kit-supported wallet
+- `UserRejectedError` — User closed the popup
+- `InsufficientBalanceError` — op_underfunded / not enough XLM
 
-`toError(e)` inspects raw thrown values and maps them. the send form switches on `instanceof` to render a friendly message instead of a stack trace.
+`toError(e)` inspects raw thrown values and maps them. The send form switches on `instanceof` to render a friendly message instead of a stack trace.
 
-## screenshots
+## Screenshots
 
 | | |
 |---|---|
-| wallet picker | ![wallet picker](docs/screenshots/wallet-picker.png) |
-| balance loaded | ![balance](docs/screenshots/balance.png) |
-| sending | ![sending](docs/screenshots/sending.png) |
-| sent (payment + on-chain log) | ![sent](docs/screenshots/sent.png) |
-| live tip feed | ![events](docs/screenshots/events.png) |
-| receipts panel | ![receipts](docs/screenshots/receipts.png) |
-| mobile view | ![mobile](docs/screenshots/mobile.png) |
-| ci passing | ![ci](docs/screenshots/ci.png) |
-| cargo test output | ![tests](docs/screenshots/tests.png) |
+| Wallet picker | ![Wallet picker](docs/screenshots/wallet-picker.png) |
+| Balance loaded | ![Balance](docs/screenshots/balance.png) |
+| Sent (payment + on-chain log) | ![Sent](docs/screenshots/sent.png) |
+| Live tip feed | ![Events](docs/screenshots/events.png) |
+| Receipts panel | ![Receipts](docs/screenshots/receipts.png) |
+| Mobile view | ![Mobile](docs/screenshots/mobile.png) |
+| CI passing | ![CI](docs/screenshots/ci.png) |
+| Cargo test output | ![Tests](docs/screenshots/tests.png) |
 
-## notes
+## Notes
 
-- amounts on the contract are i128 stroops. the frontend converts via `xlmToStroops("1.5")` so there's no float drift.
-- the tip_jar contract doesn't move the xlm; the payment goes through a regular horizon op. the contract is the on-chain ledger of "who tipped whom, how much, with what memo" plus the inter-contract mint. simpler than wiring sac transfers, and arguably more honest about what's happening.
-- if the second signature is rejected after the payment goes through, the form surfaces both the payment hash and the failure so you can verify funds.
-- receipts are soulbound (no transfer function on the receipt contract) because they're just proof, not an asset.
+- Amounts on the contract are i128 stroops. The frontend converts via `xlmToStroops("1.5")` so there's no float drift.
+- The tip_jar contract doesn't move the XLM; the payment goes through a regular Horizon op. The contract is the on-chain ledger of "who tipped whom, how much, with what memo" plus the inter-contract mint. Simpler than wiring SAC transfers, and arguably more honest about what's happening.
+- If the second signature is rejected after the payment goes through, the form surfaces both the payment hash and the failure so you can verify funds.
+- Receipts are soulbound (no transfer function on the receipt contract) because they're just proof, not an asset.
