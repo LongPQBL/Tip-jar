@@ -4,8 +4,8 @@ A small Stellar dApp on testnet for sending XLM tips. Connects a wallet (Freight
 
 [![CI](https://github.com/LongPQBL/Tip-jar/actions/workflows/ci.yml/badge.svg)](https://github.com/LongPQBL/Tip-jar/actions)
 
-- Live: <DEMO_URL>
-- Demo video: <DEMO_VIDEO_URL>
+- Live: https://tip-jar-jade.vercel.app/
+- Demo video: https://drive.google.com/drive/folders/132gyG_kGFk5EZ25spJdD4J8zuG-mvIyd?usp=sharing
 - Tip Jar contract: [`CDBKD2U2…SV4Y`](https://stellar.expert/explorer/testnet/contract/CDBKD2U27Y73EI42LC6HMAS53PGVB6CUZK7DFPNWTOODSYOHD6L3SV4Y)
 - Receipt contract: [`CBO2AVI6…J7XT`](https://stellar.expert/explorer/testnet/contract/CBO2AVI6YI5A27Z3A7WB36544DUM37SZ7QN3G6BMENJQY2YZ5DVVJ7XT)
 
