@@ -2,14 +2,14 @@ export function HeroSection() {
   return (
     <section className="mt-6">
       <p className="text-base leading-relaxed text-muted sm:text-lg">
-        send tips on stellar testnet.{" "}
-        <span className="text-fg">every tip is logged on-chain</span> and the
+        Send tips on Stellar Testnet.{" "}
+        <span className="text-fg">Every tip is logged on-chain</span> and the
         tipper gets a soulbound receipt token back as proof.
       </p>
       <div className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-3 sm:gap-3">
-        <Step n={1} label="connect" desc="a stellar wallet" />
-        <Step n={2} label="send" desc="any address with a memo" />
-        <Step n={3} label="collect" desc="a receipt per tip" />
+        <Step n={1} label="Connect" desc="A Stellar wallet" />
+        <Step n={2} label="Send" desc="Any address with a memo" />
+        <Step n={3} label="Collect" desc="A receipt per tip" />
       </div>
     </section>
   );

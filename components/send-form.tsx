@@ -46,11 +46,11 @@ export function SendForm() {
       className="space-y-3 rounded-lg border border-border bg-surface p-5"
     >
       <div className="text-xs uppercase tracking-wider text-subtle">
-        send tip
+        Send Tip
       </div>
       <input
         type="text"
-        placeholder="destination (G...)"
+        placeholder="Destination (G...)"
         value={to}
         onChange={(e) => setTo(e.target.value.trim())}
         required
@@ -61,7 +61,7 @@ export function SendForm() {
           type="number"
           step="0.0000001"
           min="0.0000001"
-          placeholder="amount"
+          placeholder="Amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           required
@@ -69,7 +69,7 @@ export function SendForm() {
         />
         <input
           type="text"
-          placeholder="memo (optional)"
+          placeholder="Memo (optional)"
           value={memo}
           onChange={(e) => setMemo(e.target.value)}
           maxLength={28}
@@ -81,25 +81,25 @@ export function SendForm() {
         disabled={send.isPending}
         className="w-full rounded-md bg-accent px-3 py-2 text-sm font-medium text-bg transition-colors hover:bg-cyan-300 disabled:opacity-50"
       >
-        {send.isPending ? "sending..." : "send tip →"}
+        {send.isPending ? "Sending..." : "Send Tip →"}
       </button>
 
       {send.isPending && (
         <div className="text-xs text-subtle">
-          awaiting wallet signatures (payment + on-chain log)...
+          Awaiting wallet signatures (payment + on-chain log)...
         </div>
       )}
 
       {send.isSuccess && send.data && (
         <div className="space-y-1.5 rounded-md border border-success/30 bg-success/5 p-3 text-xs">
-          <div className="font-medium text-success">sent and logged</div>
+          <div className="font-medium text-success">Sent and logged</div>
           <a
             href={`${EXPLORER}/${send.data.paymentHash}`}
             target="_blank"
             rel="noreferrer"
             className="block break-all font-mono text-muted hover:text-success"
           >
-            payment: {send.data.paymentHash.slice(0, 16)}...
+            Payment: {send.data.paymentHash.slice(0, 16)}...
           </a>
           <a
             href={`${EXPLORER}/${send.data.contractHash}`}
@@ -107,7 +107,7 @@ export function SendForm() {
             rel="noreferrer"
             className="block break-all font-mono text-muted hover:text-success"
           >
-            on-chain: {send.data.contractHash.slice(0, 16)}...
+            On-chain: {send.data.contractHash.slice(0, 16)}...
           </a>
         </div>
       )}
@@ -115,10 +115,10 @@ export function SendForm() {
       {err && (
         <div className="rounded-md border border-danger/30 bg-danger/5 p-3 text-xs text-danger">
           {err instanceof UserRejectedError
-            ? "you rejected the request in your wallet."
+            ? "You rejected the request in your wallet."
             : err instanceof InsufficientBalanceError
-              ? "not enough xlm in your account to cover this transfer."
-              : `failed: ${err.message}`}
+              ? "Not enough XLM in your account to cover this transfer."
+              : `Failed: ${err.message}`}
         </div>
       )}
     </form>

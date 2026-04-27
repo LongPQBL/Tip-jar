@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "tip jar",
-  description: "send xlm tips on stellar testnet",
+  title: "Tip Jar",
+  description: "Send XLM tips on Stellar testnet",
 };
 
 export default function RootLayout({

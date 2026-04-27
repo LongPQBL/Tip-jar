@@ -27,13 +27,13 @@ export function EventFeed() {
   return (
     <div className="rounded-lg border border-border bg-surface p-5">
       <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-subtle">
-        recent tips
+        Recent Tips
         <span className="flex items-center gap-1.5 text-accent">
           <span className="relative flex h-1.5 w-1.5">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
           </span>
-          live
+          Live
         </span>
       </div>
       {isLoading ? (
@@ -43,10 +43,10 @@ export function EventFeed() {
           ))}
         </div>
       ) : isError ? (
-        <div className="mt-3 text-sm text-danger">failed to load events</div>
+        <div className="mt-3 text-sm text-danger">Failed to load events</div>
       ) : !data || data.length === 0 ? (
         <div className="mt-3 text-sm text-subtle">
-          no tips yet. send one to see it here.
+          No tips yet. Send one to see it here.
         </div>
       ) : (
         <ul className="mt-3 space-y-3">

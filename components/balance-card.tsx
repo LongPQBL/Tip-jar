@@ -17,13 +17,13 @@ export function BalanceCard() {
 
   return (
     <div className="rounded-lg border border-border bg-surface p-5">
-      <div className="text-xs uppercase tracking-wider text-subtle">balance</div>
+      <div className="text-xs uppercase tracking-wider text-subtle">Balance</div>
       <div className="mt-2 font-mono text-2xl font-semibold tracking-tight sm:text-3xl">
         {isLoading ? (
           <span className="inline-block h-7 w-32 animate-pulse rounded bg-elevated sm:h-8 sm:w-40" />
         ) : isError ? (
           <span className="text-base font-normal text-danger">
-            failed to load
+            Failed to load
           </span>
         ) : (
           <>

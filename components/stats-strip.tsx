@@ -19,25 +19,25 @@ export function StatsStrip() {
 
   return (
     <section className="mt-6">
-      <div className="text-xs uppercase tracking-wider text-subtle">global</div>
+      <div className="text-xs uppercase tracking-wider text-subtle">Global</div>
       <div className="mt-2 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <StatBox
-          label="tips logged"
+          label="Tips Logged"
           value={fmt(data?.tipsLogged)}
           loading={isLoading}
         />
         <StatBox
-          label="recent xlm"
+          label="Recent XLM"
           value={fmtXlm(data?.recentXlm)}
           loading={isLoading}
         />
         <StatBox
-          label="recipients"
+          label="Recipients"
           value={fmt(data?.recipients)}
           loading={isLoading}
         />
         <StatBox
-          label="tip jar"
+          label="Tip Jar"
           value={
             TIP_JAR_ID ? `${TIP_JAR_ID.slice(0, 4)}...${TIP_JAR_ID.slice(-4)}` : "—"
           }
