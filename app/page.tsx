@@ -1,4 +1,5 @@
 import { WalletButton } from "@/components/wallet-button";
+import { BalanceCard } from "@/components/balance-card";
 
 export default function Home() {
   return (
@@ -11,6 +12,9 @@ export default function Home() {
         <p className="mt-3 text-[var(--color-muted)]">
           send xlm tips on stellar testnet.
         </p>
+        <div className="mt-8">
+          <BalanceCard />
+        </div>
       </div>
     </main>
   );

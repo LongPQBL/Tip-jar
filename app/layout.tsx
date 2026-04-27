@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { QueryProvider } from "./query-provider";
 import { WalletProvider } from "./wallet-context";
 import "./globals.css";
 
@@ -21,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={geist.variable}>
       <body className="font-sans antialiased">
-        <WalletProvider>{children}</WalletProvider>
+        <QueryProvider>
+          <WalletProvider>{children}</WalletProvider>
+        </QueryProvider>
       </body>
     </html>
   );
