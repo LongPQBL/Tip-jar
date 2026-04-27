@@ -16,7 +16,6 @@ dist
 
 # rust / soroban
 target/
-Cargo.lock
 *.wasm
 
 # env
