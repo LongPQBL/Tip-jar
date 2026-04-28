@@ -140,9 +140,9 @@ CI runs them on every push (see `.github/workflows/ci.yml`).
 
 Three typed errors in `lib/errors.ts` cover the failure modes the wallet kit + Horizon throw at us:
 
-- `WalletNotFoundError` — No extension, no kit-supported wallet
-- `UserRejectedError` — User closed the popup
-- `InsufficientBalanceError` — op_underfunded / not enough XLM
+- `WalletNotFoundError` - No extension, no kit-supported wallet
+- `UserRejectedError` - User closed the popup
+- `InsufficientBalanceError` - op_underfunded / not enough XLM
 
 `toError(e)` inspects raw thrown values and maps them. The send form switches on `instanceof` to render a friendly message instead of a stack trace.
 
