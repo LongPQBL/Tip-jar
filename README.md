@@ -9,6 +9,15 @@ A small Stellar dApp on testnet for sending XLM tips. Connects a wallet (Freight
 - Tip Jar contract: [`CDBKD2U2…SV4Y`](https://stellar.expert/explorer/testnet/contract/CDBKD2U27Y73EI42LC6HMAS53PGVB6CUZK7DFPNWTOODSYOHD6L3SV4Y)
 - Receipt contract: [`CBO2AVI6…J7XT`](https://stellar.expert/explorer/testnet/contract/CBO2AVI6YI5A27Z3A7WB36544DUM37SZ7QN3G6BMENJQY2YZ5DVVJ7XT)
 
+## Highlights
+
+- **Two-step tip flow.** Horizon payment moves the XLM, Soroban records the tip on chain. Both signed in one wallet prompt via auth-entry discovery.
+- **Soulbound receipts.** Each tip mints 1 SEP-41 token to the tipper. No `transfer` method, so the receipt can't be flipped - it's proof you tipped.
+- **Inter-contract mint.** Tip Jar calls into the receipt contract on every successful tip. Receipt admin is set to the Tip Jar contract on deploy.
+- **Live event feed.** Soroban RPC `getEvents` polls every 6 seconds for the `tip` topic, decoded into the activity panel.
+- **Multi-wallet.** Freighter, xBull, Albedo, Lobstr - all explicit modules, no `defaultModules()`.
+- **Mobile-responsive.** Tested in DevTools mobile mode + on a phone before shipping.
+
 ## What's In Here
 
 ```
