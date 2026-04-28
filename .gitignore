@@ -17,6 +17,7 @@ dist
 # rust / soroban
 target/
 *.wasm
+.soroban/
 
 # env
 .env
@@ -24,10 +25,17 @@ target/
 
 # misc
 .DS_Store
+Thumbs.db
 *.pem
 .vercel
 *.tsbuildinfo
 next-env.d.ts
+
+# editors
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # logs
 npm-debug.log*
