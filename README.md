@@ -146,6 +146,10 @@ Three typed errors in `lib/errors.ts` cover the failure modes the wallet kit + H
 
 `toError(e)` inspects raw thrown values and maps them. The send form switches on `instanceof` to render a friendly message instead of a stack trace.
 
+## CI / CD
+
+`.github/workflows/ci.yml` runs `npm ci` + typecheck + `next build` on the frontend and `cargo test` on the contract workspace, on every push and pull request, with cancel-in-progress concurrency. Frontend deploy is automatic on push to `main` via Vercel (`vercel.json` configures the framework + build command). Contract deploy is the manual `scripts/deploy.sh` because shipping a Stellar signing key into CI secrets is a security smell. End-to-end procedure: [`DEPLOYMENT_GUIDE.md`](./DEPLOYMENT_GUIDE.md).
+
 ## Screenshots
 
 | | |
